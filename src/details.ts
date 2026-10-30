@@ -1,4 +1,5 @@
 import * as T from 'three';
+import {SCRIPTURE_DESKS} from './navigation';
 export function addDetails(scene:T.Scene, solid:(x:number,z:number,w:number,d:number)=>void){
  const materials=new Map<string,T.MeshStandardMaterial>();
  const material=(c:string)=>{if(!materials.has(c))materials.set(c,new T.MeshStandardMaterial({color:c,roughness:.65}));return materials.get(c)!;};
@@ -62,7 +63,7 @@ export function addDetails(scene:T.Scene, solid:(x:number,z:number,w:number,d:nu
  for(let i=0;i<12;i++){const a=i*Math.PI/6;const fold=box(Math.sin(a)*.45,1.35,Math.cos(a)*.45,.025,1.3,.025,'#cec5b1',q);fold.rotation.z=Math.sin(a)*.12;}solid(10,6,2.4,2.4);
  // Low scripture desks, open books and cushions. Seat sits well behind desk collision.
  const desks=[];
- for(const x of [-5.8,5.8]){const z=-11;box(x,.67,z-.9,1.7,.14,.85,'#6a402a');for(const s of [-1,1])box(x+s*.65,.4,z-.9,.12,.55,.65,'#573522');solid(x,z-.9,1.7,.85);box(x,.18,z+.55,1.2,.2,1,'#454641');
+ for(const {x,z} of SCRIPTURE_DESKS){box(x,.67,z-.9,1.7,.14,.85,'#6a402a');for(const s of [-1,1])box(x+s*.65,.4,z-.9,.12,.55,.65,'#573522');solid(x,z-.9,1.7,.85);box(x,.18,z+.55,1.2,.2,1,'#454641');
  for(const s of [-1,1]){const page=box(x+s*.22,.77,z-.9,.44,.025,.6,'#f2e4bc');page.rotation.z=-s*.10;for(let j=0;j<8;j++)box(x+s*.22,.793,z-1.12+j*.06,.32,.006,.008,'#8e7961');}cylinder(x+.65,.82,z-.7,.08,.14,'#b9ac87');desks.push({x,z:z+.55,radius:1.2,label:'Bàn đọc kinh · E để ngồi đọc',action:'meditate' as const,kind:'scripture'});}
 
  // All 18 meditation cushions remain free for real players in the next milestone.

@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --experimental-strip-types src/animation.test.ts && node --experimental-strip-types src/practice-state.test.ts && node --experimental-strip-types src/ritual-state.test.ts"
+    "test": "node --experimental-strip-types src/animation.test.ts && node --experimental-strip-types src/practice-state.test.ts && node --experimental-strip-types src/ritual-state.test.ts && node --experimental-strip-types src/navigation.test.ts && node --experimental-strip-types src/camera.test.ts"
   },
   "dependencies": {
     "three": "^0.180.0"

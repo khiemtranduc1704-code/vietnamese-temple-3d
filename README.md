@@ -1,13 +1,13 @@
 # Chùa An Lạc — first playable prototype
 
-A fictional, stylized Southern Vietnamese Buddhist temple, made with Three.js, TypeScript and Vite. All models are procedural geometry. No reference image was supplied. This is a local single-player prototype; no multiplayer server is included.
+A fictional, stylized Southern Vietnamese Buddhist temple, made with Three.js, TypeScript and Vite. All models are procedural geometry, with the worship hall decorated to match the supplied reference image. This is a local single-player prototype; no multiplayer server is included.
 
 ## Open the game (Mac)
 
 Double-click **Start Temple.command** in this folder. Keep the Terminal window open while playing. It starts the local server and opens your browser. If macOS prevents launching the file, open Terminal and run:
 
 ```sh
-cd "/Users/khiem/Documents/ChatGPT/Vietnamese-Temple-3D"
+cd "/Users/khiem/Downloads/ChatGPT/Vietnamese-Temple-3D"
 PATH="$PWD/.runtime/bin:$PATH" npm run dev -- --open
 ```
 
@@ -33,7 +33,7 @@ Movement is locked during worship and while returning to standing. Actions can r
 
 ## A first visit
 
-1. Click Enter the temple.
+1. Click Enter the temple; the current version starts inside the main hall. Press H to return here, or click the courtyard button to explore outdoors.
 2. Try 1, 2, 3, 4, 5 and 6 in the open courtyard. Press R between them. Hold W during prayer to confirm walking is locked.
 3. Walk toward the main hall; go around the central incense burner.
 4. Walk through the open front between the wooden columns. Approach a mat and press E to sit. Press R to stand.
@@ -50,7 +50,7 @@ npm run build
 npm run preview
 ```
 
-`npm test` checks persistent actions, movement locking, return-to-standing, three full cycles, smooth interruption, and finite pose samples. Production output is in `dist/` after building.
+`npm test` runs five regression suites covering worship actions and movement locks, practice state, rituals, navigation/seating clearance, and camera obstruction. Production output is in `dist/` after building.
 
 ## Architecture and next milestone
 
@@ -85,3 +85,7 @@ Esc hoặc R: đóng thời khóa và đứng dậy. Khi mở thời khóa, nhâ
 Nhan N hoac nut Nghi le & cong duc de mo bang. Den gan cac vat the va nhan E cung mo dung hoat dong. Thung cong duc o ben phai truoc chanh dien (x=7.7,z=-6), ban xin xam ben trai (x=-7.7,z=-6), ban cung sao ngoai san phia dong (x=13,z=-11). Cac dem ngoi van trong.
 
 Cong duc dung phieu tien mo phong cac menh gia VND tu 100 den 500.000 dong; khong thanh toan that va khong co vi/ngan hang. Tong so tien mo phong va so lan duoc luu cuc bo. Xin xam lac ong va rut ngau nhien mot trong 32 the loi nhac tu bien soan, khong phai du doan tuong lai. Huong co lua chuyen dong va duoc them vao lu huong 3D sau moi lan dang. Ban cung sao co hoa, trai cay, bai vi Cau An va chin den trang tri duoc thap lan luot; khong tinh sao han. Cac nghiep vu hoan tat sau hoat anh, chi cho phep mot tac vu dang chay; trang thai luu tai trinh duyet hien tai.
+
+## Milestone 1 stability checkpoint
+
+See [MILESTONE_1_AUDIT.md](MILESTONE_1_AUDIT.md) for fixes, production-browser verification, and remaining manual checks. The local tag `milestone-1-stable` identifies the audited version. No multiplayer or remote deployment is included.
