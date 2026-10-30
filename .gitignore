@@ -17,3 +17,12 @@ dist/
 server/node_modules/
 server/dist/
 coverage/
+
+# Additional local credentials and secret material
+.secrets/
+secrets/
+*.secret
+*.credentials
+credentials.*
+secrets.*
+.npmrc
