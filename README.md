@@ -1,8 +1,10 @@
-# Chùa An Lạc 3D — online deployment candidate
+# Chùa An Lạc 3D — private online rooms
 
-Three.js + TypeScript + Vite frontend and a Colyseus multiplayer server. All temple architecture, avatar geometry, worship animation curves, camera, collisions and personal practice features from Milestone 1 are retained. This branch adds invite-only rooms for up to 20 players. Nothing has been deployed or pushed.
+Three.js + TypeScript + Vite frontend and a Colyseus multiplayer server. All temple architecture, avatar geometry, worship animation curves, camera, collisions and personal practice features from Milestone 1 are retained. This branch adds invite-only rooms for up to 20 players. Live game: https://chua-an-lac-3d.vercel.app/ — backend: https://chua-an-lac-multiplayer.onrender.com. Source is published on GitHub main.
 
-**Beginner guide:** [DEPLOYMENT.md](DEPLOYMENT.md), in Vietnamese, lists accounts, exact dashboard fields, click order, costs/limitations and the final Zalo invitation flow. [MILESTONE_3_REPORT.md](MILESTONE_3_REPORT.md) explains implementation and test coverage.
+**Live verification:** [ONLINE_DEPLOYMENT_REPORT.md](ONLINE_DEPLOYMENT_REPORT.md).
+
+**Beginner guide:** [DEPLOYMENT.md](DEPLOYMENT.md), in Vietnamese, lists the live URLs, hosting settings, update steps, limitations and Zalo invitation flow. [MILESTONE_3_REPORT.md](MILESTONE_3_REPORT.md) explains implementation and test coverage.
 
 ## Stable version and this candidate
 

@@ -1,6 +1,7 @@
 services:
   - type: web
     name: chua-an-lac-multiplayer
+    branch: main
     runtime: node
     plan: free
     numInstances: 1

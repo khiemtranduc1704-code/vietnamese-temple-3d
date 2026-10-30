@@ -1,0 +1,6 @@
+.runtime
+.env
+.env.*
+server/
+node_modules/
+dist/

@@ -1,5 +1,7 @@
 # Milestone 3 — deployment preparation report
 
+Historical preparation snapshot. The project has since been deployed; see [ONLINE_DEPLOYMENT_REPORT.md](ONLINE_DEPLOYMENT_REPORT.md) for the live verification results.
+
 Prepared locally on 2026-10-30. No repository, hosting service, account, paid plan or public deployment was created. No push was performed.
 
 ## Initial inspection
