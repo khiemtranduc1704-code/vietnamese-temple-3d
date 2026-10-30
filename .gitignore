@@ -2,4 +2,18 @@ node_modules/
 dist/
 .DS_Store
 
-.runtime/
+.runtime
+
+# Local configuration / credentials (only redacted examples are tracked)
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.log
+.vercel/
+server/node_modules/
+server/dist/
+coverage/

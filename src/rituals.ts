@@ -41,8 +41,9 @@ const fortunes=[
  ['Mỉm cười','Nhớ lại một khoảnh khắc nhỏ đã làm mình vui hôm nay.'],
  ['Trở về','Dù ngày qua thế nào, vẫn có thể bắt đầu lại bằng một hơi thở nhẹ.']
 ];
-export function createRituals(scene:T.Scene,solid:(x:number,z:number,w:number,d:number)=>void,hooks:{onOpen:()=>boolean;onClose:()=>void}){
+export function createRituals(scene:T.Scene,solid:(x:number,z:number,w:number,d:number)=>void,hooks:{onOpen:()=>boolean;onClose:()=>void;onComplete?:(type:string,options:Record<string,unknown>)=>void}){
  let saved={};try{saved=JSON.parse(localStorage.getItem('anlac-rituals-v5')||'{}');}catch{}const state=new RitualState(saved||{});
+ let sharedWorld:{hall:number;courtyard:number;stars:number}|null=null;
  let opened=false,mode:RitualMode='donation',selected=10000,sticks=3,intention='Bình an',pending:{mode:RitualMode;elapsed:number;value:number;hall:boolean}|null=null,nearHall=false;
  const root=new T.Group();scene.add(root);const materials=new Map<string,T.MeshStandardMaterial>();
  function material(color:string){if(!materials.has(color))materials.set(color,new T.MeshStandardMaterial({color,roughness:.64}));return materials.get(color)!;}
@@ -66,7 +67,7 @@ export function createRituals(scene:T.Scene,solid:(x:number,z:number,w:number,d:
  const starGlow=new T.PointLight('#ffbd61',state.stars?2:0,5,2);starGlow.position.set(13,2,-11);root.add(starGlow);
  // A moving lit bundle and capped persistent incense in both existing burners.
  const bundle=new T.Group();root.add(bundle);bundle.visible=false;for(const x of [-.12,0,.12]){cyl(x,0,0,.012,.9,'#ab4934',bundle);ball(x,.46,0,.025,'#f8a344',bundle);}
- const planted:T.Group[]=[];function incenseVisuals(){for(const g of planted)g.removeFromParent();planted.length=0;for(const inHall of [true,false]){const count=Math.min(inHall?state.hallIncense:state.incense-state.hallIncense,30);for(let i=0;i<count;i++){const g=new T.Group();g.position.set(Math.sin(i*2.4)*.3,inHall?1.3:1.65,(inHall?-16.1:-3)+Math.cos(i*2.4)*.2);root.add(g);cyl(0,0,0,.009,.7,'#954e37',g);ball(0,.36,0,.02,'#e77b41',g);planted.push(g);}}}incenseVisuals();
+ const planted:T.Group[]=[];function incenseVisuals(){for(const g of planted){g.removeFromParent();g.traverse(o=>{if(o instanceof T.Mesh)o.geometry.dispose();});}planted.length=0;for(const inHall of [true,false]){const count=Math.min(sharedWorld?(inHall?sharedWorld.hall:sharedWorld.courtyard):(inHall?state.hallIncense:state.incense-state.hallIncense),30);for(let i=0;i<count;i++){const g=new T.Group();g.position.set(Math.sin(i*2.4)*.3,inHall?1.3:1.65,(inHall?-16.1:-3)+Math.cos(i*2.4)*.2);root.add(g);cyl(0,0,0,.009,.7,'#954e37',g);ball(0,.36,0,.02,'#e77b41',g);planted.push(g);}}}incenseVisuals();
  document.querySelector('#app')!.insertAdjacentHTML('beforeend',`<button id="ritual-launch" class="ritual-launch">Nghi lễ & công đức · N</button><section id="rituals" class="rituals hidden" role="dialog" aria-modal="true" aria-label="Nghi lễ trong chùa"><article class="ritual-card"><header><span>CHÙA AN LẠC · NGHI LỄ TRONG GAME</span><button id="ritual-close">Đóng · Esc</button></header><nav>${(['donation','fortune','incense','stars'] as const).map((m,i)=>`<button data-ritual-tab="${m}">${['Công đức','Xin xăm','Thắp hương','Cúng sao'][i]}</button>`).join('')}</nav><div class="ritual-columns"><div id="ritual-stage" class="ritual-stage" aria-hidden="true"></div><div id="ritual-form"></div></div><p id="ritual-feedback" role="status" aria-live="polite"></p></article></section>`);
  const overlay=document.querySelector<HTMLElement>('#rituals')!,stage=document.querySelector<HTMLElement>('#ritual-stage')!,form=document.querySelector<HTMLElement>('#ritual-form')!;
  const money=(n:number)=>n.toLocaleString('vi-VN')+' ₫';function save(){try{localStorage.setItem('anlac-rituals-v5',JSON.stringify(state.snapshot()));}catch{}}
@@ -108,7 +109,7 @@ export function createRituals(scene:T.Scene,solid:(x:number,z:number,w:number,d:
   if(done.mode==='fortune'){state.draw(done.value);tube.rotation.z=0;message=`Đã rút quẻ số ${String(state.fortune).padStart(2,'0')}.`;}
   if(done.mode==='incense'){state.burn(done.value,done.hall);bundle.visible=false;incenseVisuals();message=`Đã dâng ${done.value} nén hương.`;}
   if(done.mode==='stars'){state.lightStars();message=`Đã thắp đèn cầu an · ${intention}.`;}
-  save();if(opened){render();feedback(message);}
+  save();hooks.onComplete?.(done.mode,{hall:done.hall,count:done.value,value:done.value});if(opened){render();feedback(message);}
  }
- return {open,close,update,get isOpen(){return opened;},snapshot:()=>state.snapshot()};
+ return {open,close,update,setSharedWorld:(value:{hall:number;courtyard:number;stars:number}|null)=>{if(JSON.stringify(sharedWorld)===JSON.stringify(value))return;sharedWorld=value;incenseVisuals();const lit=(sharedWorld?.stars??state.stars)>0;flames.forEach(f=>f.visible=lit);starGlow.intensity=lit?2:0;},get isOpen(){return opened;},snapshot:()=>state.snapshot()};
 }

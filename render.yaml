@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: chua-an-lac-multiplayer
+    runtime: node
+    plan: free
+    numInstances: 1
+    buildCommand: npm ci --include=dev --prefix server && npm run build --prefix server
+    startCommand: npm start --prefix server
+    healthCheckPath: /health
+    autoDeployTrigger: "off"
+    region: singapore
+    envVars:
+      - key: NODE_VERSION
+        value: 22.21.1
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: MAX_ROOMS
+        value: 10
